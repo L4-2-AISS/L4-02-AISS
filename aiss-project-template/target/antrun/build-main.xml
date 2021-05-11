@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="maven-antrun-" default="main">
   <target name="main">
-    <property name="target.webapp.dir" value="C:\Users\jesus\git\L4-02-AISS\aiss-project-template\target/aiss-project-template-1.0-SNAPSHOT" />
+    <property name="target.webapp.dir" value="C:\Users\jesus\git\L4-02-AISS\aiss-project-template\target/aiss-football-wiki-1.0-SNAPSHOT" />
     <property name="src.webapp.dir" value="C:\Users\jesus\git\L4-02-AISS\aiss-project-template/src/main/webapp" />
     <sync todir="${target.webapp.dir}" includeEmptyDirs="true" verbose="true">
       <fileset dir="${src.webapp.dir}" />
