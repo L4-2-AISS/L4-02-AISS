@@ -15,6 +15,10 @@ public class Competition {
 		this.name = name;
 	}
 	
+	public Competition(String name, String country) {
+		this.name = name;
+		this.country = country;
+	}
 	protected void setTeams(List<Team> t) {
 		teams = t;
 	}

@@ -10,12 +10,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+import org.jboss.resteasy.spi.BadRequestException;
+import org.jboss.resteasy.spi.NotFoundException;
+
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import aiss.model.Team;
 import aiss.model.repository.MapCompetitionRepository;
 import aiss.model.repository.CompetitionRepository;
 
+import java.net.URI;
 import java.util.Collection;
 
 
@@ -41,37 +48,76 @@ public class TeamResource {
 	@Produces("application/json")
 	public Collection<Team> getAll()
 	{
-		return null;
+		return repository.getAllTeams();
 	}
 	
 	
 	@GET
 	@Path("/{name}")
 	@Produces("application/json")
-	public Team get(@PathParam("name") String teamName)
+	public Team get(@PathParam("name") String name)
 	{
 		
-		return null;
+		Team team = repository.getTeam(name);
+		
+		if (team == null) {
+			throw new NotFoundException("The team named "+ name +" was not found");			
+		}
+		
+		return team;
 	}
 	
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response addTeam(@Context UriInfo uriInfo, Team team) {
-		return null;
+		if (team.getName() == null || "".equals(team.getName()))
+			throw new BadRequestException("The name of the team must not be null");
+
+		repository.addTeam(team);
+
+		// Builds the response. Returns the competition the has just been added.
+		UriBuilder ub = uriInfo.getAbsolutePathBuilder().path(this.getClass(), "get");
+		URI uri = ub.build(team.getName());
+		ResponseBuilder resp = Response.created(uri);
+		resp.entity(team);			
+		return resp.build();
 	}
 	
 	
 	@PUT
 	@Consumes("application/json")
 	public Response updateTeam(Team team) {
-		return null;
+		Team oldTeam = repository.getTeam(team.getName());
+		if (oldTeam == null) {
+			throw new NotFoundException("The team named "+ team.getName() +" was not found");			
+		}
+		
+		// Update city
+		if (team.getCity()!=null)
+			oldTeam.setCity(team.getCity());
+		
+		// Update country
+		if (team.getCountry()!=null)
+			oldTeam.setCountry(team.getCountry());
+		
+		// Update stadium
+		if (team.getStadium()!=null)
+			oldTeam.setStadium(team.getStadium());
+		
+		return Response.noContent().build();
 	}
 	
 	@DELETE
 	@Path("/{name}")
-	public Response removeTeam(@PathParam("name") String teamName) {
-		return null;
+	public Response removeTeam(@PathParam("name") String name) {
+		Team toberemoved = repository.getTeam(name);
+		if (toberemoved == null)
+			throw new NotFoundException("The team named "+ name +" was not found");
+		else
+			repository.deleteTeam(name);
+		
+		return Response.noContent().build();
 	}
 	
 }
