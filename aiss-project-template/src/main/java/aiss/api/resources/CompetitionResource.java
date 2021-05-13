@@ -56,7 +56,7 @@ public class CompetitionResource {
 
 	@GET
 	@Produces("application/json")
-	public Collection<Competition> getAll(@QueryParam("offset") String offset, @QueryParam("limit") String limit, @QueryParam("order") String order, @QueryParam("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
+	public Collection<Competition> getAllCompetitions(@QueryParam("offset") String offset, @QueryParam("limit") String limit, @QueryParam("order") String order, @QueryParam("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
 	{
 		List<Competition> res = new ArrayList<Competition>();
 		
@@ -94,7 +94,7 @@ public class CompetitionResource {
 	@GET
 	@Path("/{name}")
 	@Produces("application/json")
-	public Competition get(@PathParam("name") String name)
+	public Competition getCompetition(@PathParam("name") String name)
 	{
 		Competition comp = repository.getCompetition(name);
 		
@@ -161,7 +161,7 @@ public class CompetitionResource {
 	@Path("/{competitionName}/{teamName}")
 	@Consumes("text/plain")
 	@Produces("application/json")
-	public Response addTeam(@Context UriInfo uriInfo,@PathParam("competitionName") String competitionName, @PathParam("teamName") String teamName)
+	public Response addTeamToCompetition(@Context UriInfo uriInfo,@PathParam("competitionName") String competitionName, @PathParam("teamName") String teamName)
 	{				
 		
 		Competition competition = repository.getCompetition(competitionName);
@@ -189,7 +189,7 @@ public class CompetitionResource {
 	
 	@DELETE
 	@Path("/{competitionName}/{teamName}")
-	public Response removeTeam(@PathParam("competitionName") String competitionName, @PathParam("teamName") String teamName) {
+	public Response removeTeamFromCompetition(@PathParam("competitionName") String competitionName, @PathParam("teamName") String teamName) {
 		Competition competition = repository.getCompetition(competitionName);
 		Team team = repository.getTeam(teamName);
 		

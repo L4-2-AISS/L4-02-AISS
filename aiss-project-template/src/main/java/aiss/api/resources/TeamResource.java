@@ -51,7 +51,7 @@ public class TeamResource {
 	
 	@GET
 	@Produces("application/json")
-	public Collection<Team> getAll(@QueryParam("offset") String offset, @QueryParam("limit") String limit, @QueryParam("order") String order, @QueryParam ("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
+	public Collection<Team> getAllTeams(@QueryParam("offset") String offset, @QueryParam("limit") String limit, @QueryParam("order") String order, @QueryParam ("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
 	{
 		List<Team> res = new ArrayList<Team>();
 		
@@ -89,7 +89,7 @@ public class TeamResource {
 	@GET
 	@Path("/{name}")
 	@Produces("application/json")
-	public Team get(@PathParam("name") String name)
+	public Team getTeam(@PathParam("name") String name)
 	{
 		
 		Team team = repository.getTeam(name);
@@ -118,9 +118,6 @@ public class TeamResource {
 		return resp.build();
 	}
 	
-	/*
-	 * updateTeam: 
-	 */
 	@PUT
 	@Consumes("application/json")
 	public Response updateTeam(Team team) {
