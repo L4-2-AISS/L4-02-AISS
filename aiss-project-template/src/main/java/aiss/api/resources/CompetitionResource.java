@@ -1,9 +1,10 @@
  package aiss.api.resources;
 
 import java.net.URI;
-
+import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,22 +12,24 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.jboss.resteasy.spi.BadRequestException;
 import org.jboss.resteasy.spi.NotFoundException;
 
+import aiss.api.resources.comparators.ComparatorNameCompetition;
+import aiss.api.resources.comparators.ComparatorNameCompetitionReversed;
 import aiss.model.Competition;
 import aiss.model.Team;
-import aiss.model.repository.MapCompetitionRepository;
 import aiss.model.repository.CompetitionRepository;
+import aiss.model.repository.MapCompetitionRepository;
 
 
 
@@ -53,9 +56,30 @@ public class CompetitionResource {
 
 	@GET
 	@Produces("application/json")
-	public Collection<Competition> getAll()
+	public Collection<Competition> getAll(@QueryParam("limit") String limit, @QueryParam("offset") String offset, @QueryParam("order") String order, @QueryParam("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
 	{
-		return repository.getAllCompetitions();
+		List<Competition> res = new ArrayList<Competition>();
+		
+		for(Competition competition: repository.getAllCompetitions()) {
+			if (name == null || competition.getName().equals(name)) {
+				if (isEmpty == null 
+						|| (isEmpty && (competition.getTeams() == null || competition.getTeams().size() == 0)) 
+						|| (!isEmpty && (competition.getTeams() != null && competition.getTeams().size() > 0))) {
+					res.add(competition);
+				}
+			}
+		}
+		
+		if (order != null) {
+			if (order.equals("name")) {
+				Collections.sort(res, new ComparatorNameCompetition());
+			} else if (order.equals("-name")) {
+				Collections.sort(res, new ComparatorNameCompetitionReversed());
+			} else {
+				throw new BadRequestException("The order parameter must be 'name' or '-name'.");
+			}
+		}
+		return res.subList(Integer.parseInt(offset), Integer.parseInt(offset) + Integer.parseInt(limit) + 1);
 	}
 	
 	
