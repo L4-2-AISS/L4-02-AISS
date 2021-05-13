@@ -51,7 +51,7 @@ public class TeamResource {
 	
 	@GET
 	@Produces("application/json")
-	public Collection<Team> getAll(@QueryParam("limit") String limit, @QueryParam("offset") String offset, @QueryParam("order") String order, @QueryParam ("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
+	public Collection<Team> getAll(@QueryParam("offset") String offset, @QueryParam("limit") String limit, @QueryParam("order") String order, @QueryParam ("isEmpty") Boolean isEmpty, @QueryParam("name") String name)
 	{
 		List<Team> res = new ArrayList<Team>();
 		
@@ -65,6 +65,14 @@ public class TeamResource {
 			}
 		}
 		
+		if(offset != null && limit != null) {
+			res = res.subList(Integer.parseInt(offset), Integer.parseInt(offset) + Integer.parseInt(limit));
+		} else if (offset != null && limit == null) {
+			res = res.subList(Integer.parseInt(offset), res.size());
+		} else if (offset == null && limit != null) {
+			res = res.subList(0, Integer.parseInt(limit));
+		}
+		
 		if (order != null) {
 			if (order.equals("name")) {
 				Collections.sort(res, new ComparatorNameTeam());
@@ -74,7 +82,7 @@ public class TeamResource {
 				throw new BadRequestException("The order parameter must be 'name' or '-name'.");
 			}
 		}
-		return res.subList(Integer.parseInt(offset), Integer.parseInt(offset) + Integer.parseInt(limit) + 1);
+		return res;
 	}
 	
 	
