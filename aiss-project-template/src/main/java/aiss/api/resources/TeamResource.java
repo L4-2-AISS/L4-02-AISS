@@ -118,7 +118,9 @@ public class TeamResource {
 		return resp.build();
 	}
 	
-	
+	/*
+	 * updateTeam: 
+	 */
 	@PUT
 	@Consumes("application/json")
 	public Response updateTeam(Team team) {
