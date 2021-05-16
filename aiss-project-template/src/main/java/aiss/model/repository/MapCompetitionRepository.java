@@ -66,6 +66,62 @@ public class MapCompetitionRepository implements CompetitionRepository{
 		betis.setStadium("Benito Villamarín");
 		addTeam(betis);
 		
+		Team psg = new Team();
+		psg.setName("Paris Saint-Germain");
+		psg.setCity("Paris");
+		psg.setCountry("France");
+		psg.setStadium("Parc Des Princes");
+		addTeam(psg);
+		
+		Team monaco = new Team();
+		monaco.setName("AS Monaco");
+		monaco.setCity("Monaco");
+		monaco.setCountry("Monaco");
+		monaco.setStadium("Stade Louis II");
+		addTeam(monaco);
+		
+		Team lyon = new Team();
+		lyon.setName("Olympique Lyonnais");
+		lyon.setCity("Lyon");
+		lyon.setCountry("France");
+		lyon.setStadium("Parc Olympique Lyonnais");
+		addTeam(lyon);
+		
+		Team marsella = new Team();
+		marsella.setName("Olympique de Marseille");
+		marsella.setCity("Marseille");
+		marsella.setCountry("France");
+		marsella.setStadium("Stade Vèlodrome");
+		addTeam(marsella);
+		
+		Team mcity = new Team();
+		mcity.setName("Manchester City FC");
+		mcity.setCity("Manchester");
+		mcity.setCountry("England");
+		mcity.setStadium("Etihad Stadium");
+		addTeam(mcity);
+		
+		Team munited = new Team();
+		munited.setName("Manchester United F.C");
+		munited.setCity("Manchester");
+		munited.setCountry("England");
+		munited.setStadium("Old Trafford");
+		addTeam(munited);
+		
+		Team leicester = new Team();
+		leicester.setName("Leicester City F.C");
+		leicester.setCity("Leicester");
+		leicester.setCountry("England");
+		leicester.setStadium("King Power Stadium");
+		addTeam(leicester);
+		
+		Team chelsea = new Team();
+		chelsea.setName("Chelsea F.C");
+		chelsea.setCity("London");
+		chelsea.setCountry("England");
+		chelsea.setStadium("Stamford Bridge");
+		addTeam(chelsea);
+		
 		// Create competitions
 		Competition ligaSantander=new Competition();
 		ligaSantander.setName("LaLiga Santander");
@@ -77,6 +133,16 @@ public class MapCompetitionRepository implements CompetitionRepository{
 		championsLeague.setCountry("Europe");
 		addCompetition(championsLeague);
 		
+		Competition ligue1=new Competition();
+		ligue1.setName("Ligue 1");
+		ligue1.setCountry("France");
+		addCompetition(ligue1);
+		
+		Competition premier=new Competition();
+		premier.setName("Premier League");
+		premier.setCountry("United Kingdom");
+		addCompetition(premier);
+		
 		// Add teams to competitions
 		addTeam(ligaSantander.getName(), realMadrid.getName());
 		addTeam(ligaSantander.getName(), barcelona.getName());
@@ -87,6 +153,18 @@ public class MapCompetitionRepository implements CompetitionRepository{
 		addTeam(championsLeague.getName(), realMadrid.getName());
 		addTeam(championsLeague.getName(), barcelona.getName());
 		addTeam(championsLeague.getName(), atleticoMadrid.getName());
+		addTeam(championsLeague.getName(), psg.getName());
+		addTeam(championsLeague.getName(), mcity.getName());
+		
+		addTeam(ligue1.getName(), psg.getName());
+		addTeam(ligue1.getName(), monaco.getName());
+		addTeam(ligue1.getName(), lyon.getName());
+		addTeam(ligue1.getName(), marsella.getName());
+		
+		addTeam(premier.getName(), mcity.getName());
+		addTeam(premier.getName(), munited.getName());
+		addTeam(premier.getName(), leicester.getName());
+		addTeam(premier.getName(), chelsea.getName());
 	}
 	
 	// Competition related operations
