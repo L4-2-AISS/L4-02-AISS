@@ -12,6 +12,8 @@ Para usar el código de FootballWiki (ya sea para integrarlo en otra aplicación
 
 ### Tests **locales**
 
+**NOTA: Sólo hacer los test en localhost, no en la página web en sí**
+
 Si quieres comprobar cómo funciona [FootballWiki](https://aiss-footballwiki-313611.ew.r.appspot.com/) y probar las diferentes operaciones que se pueden realizar en la aplicación tras hacer el despliegue en local (los cuales se explican [aquí](https://app.swaggerhub.com/apis/jessalmun/aiss-footballwiki/1.0.0)), sólo tendrás que descargar un cliente REST compatible con tu navegador Web: 
 
 * Google Chrome: [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=es)
